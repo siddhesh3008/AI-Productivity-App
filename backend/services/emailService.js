@@ -5,10 +5,9 @@ let transporter = null;
 
 // Create transporter - using environment variables
 const getTransporter = () => {
-    // Return cached transporter if already created
     if (transporter) return transporter;
 
-    // For Gmail/SMTP
+    // For SMTP (local development)
     if (process.env.SMTP_HOST) {
         transporter = nodemailer.createTransport({
             host: process.env.SMTP_HOST,
@@ -23,21 +22,20 @@ const getTransporter = () => {
         return transporter;
     }
 
-    // Fallback: Console log emails (development only)
-    console.log('📧 Email service: Using console mode (no SMTP configured)');
+    // Fallback: Log emails to console (production without email config)
+    console.log('📧 Email service: Console mode - emails will be logged only');
     transporter = {
         sendMail: async (options) => {
-            console.log('📧 Email would be sent:');
-            console.log('To:', options.to);
-            console.log('Subject:', options.subject);
-            console.log('---');
-            return { messageId: 'dev-mode-' + Date.now() };
+            console.log('📧 [Email disabled] Would send to:', options.to);
+            console.log('📧 [Email disabled] Subject:', options.subject);
+            // Return success so app continues to work
+            return { messageId: 'disabled-' + Date.now() };
         },
     };
     return transporter;
 };
 
-// Helper to send email
+// Send email (logs to console if no email configured)
 const sendEmail = async (mailOptions) => {
     return await getTransporter().sendMail(mailOptions);
 };
