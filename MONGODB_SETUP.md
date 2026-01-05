@@ -43,8 +43,10 @@ mongodb+srv://username:<password>@cluster0.xxxxx.mongodb.net/?retryWrites=true&w
 1. Replace `<password>` with your actual password
 2. Add database name after `.net/`:
 ```
-MONGODB_URI=mongodb+srv://productivityapp:YOUR_PASSWORD@cluster0.xxxxx.mongodb.net/ai-productivity-app?retryWrites=true&w=majority
+MONGODB_URI=mongodb+srv://<your_username>:<your_password>@<your_cluster>.mongodb.net/<your_database>?retryWrites=true&w=majority
 ```
+
+> ⚠️ **Important**: Never commit real credentials to version control!
 
 ## Troubleshooting
 
