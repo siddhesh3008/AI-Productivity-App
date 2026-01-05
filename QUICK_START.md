@@ -15,7 +15,7 @@ Before you begin, make sure you have:
 If you haven't already:
 1. Follow [MONGODB_SETUP.md](./MONGODB_SETUP.md) to create your database
 2. Get your connection string
-3. It should look like: `mongodb+srv://username:password@cluster.mongodb.net/dbname`
+3. It should look like: `mongodb+srv://<username>:<password>@<cluster>.mongodb.net/<database>`
 
 ### 2. Configure Backend
 ```bash
