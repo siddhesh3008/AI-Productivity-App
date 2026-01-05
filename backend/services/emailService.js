@@ -1,7 +1,23 @@
 import nodemailer from 'nodemailer';
+import { Resend } from 'resend';
+
+// Resend client instance
+let resendClient = null;
 
 // Transporter instance (created lazily)
 let transporter = null;
+
+// Check if using Resend
+const isUsingResend = () => !!process.env.RESEND_API_KEY;
+
+// Get Resend client
+const getResendClient = () => {
+    if (!resendClient && process.env.RESEND_API_KEY) {
+        resendClient = new Resend(process.env.RESEND_API_KEY);
+        console.log('📧 Email service: Using Resend');
+    }
+    return resendClient;
+};
 
 // Create transporter - using environment variables
 const getTransporter = () => {
@@ -50,6 +66,26 @@ const getTransporter = () => {
         },
     };
     return transporter;
+};
+
+// Helper to send email via Resend or Nodemailer
+const sendEmail = async (mailOptions) => {
+    if (isUsingResend()) {
+        const resend = getResendClient();
+        const result = await resend.emails.send({
+            from: mailOptions.from,
+            to: mailOptions.to,
+            subject: mailOptions.subject,
+            html: mailOptions.html,
+            text: mailOptions.text,
+        });
+        if (result.error) {
+            throw new Error(result.error.message);
+        }
+        return { messageId: result.data?.id || 'resend-' + Date.now() };
+    } else {
+        return await getTransporter().sendMail(mailOptions);
+    }
 };
 
 // Get the FROM address from environment or default
@@ -139,7 +175,7 @@ AI Productivity App - Stay organized, stay productive
         };
 
         try {
-            const info = await getTransporter().sendMail(mailOptions);
+            const info = await sendEmail(mailOptions);
             // Log success without exposing token
             console.log('[Email] Password reset email sent to:', email.replace(/(.{2})(.*)(@.*)/, '$1***$3'));
             return { success: true, messageId: info.messageId };
@@ -219,7 +255,7 @@ AI Productivity App - Stay organized, stay productive
         };
 
         try {
-            const info = await getTransporter().sendMail(mailOptions);
+            const info = await sendEmail(mailOptions);
             console.log('[Email] Verification email sent to:', email.replace(/(.{2})(.*)(@.*)/, '$1***$3'));
             return { success: true, messageId: info.messageId };
         } catch (error) {
@@ -290,7 +326,7 @@ Visit ${process.env.CLIENT_URL}/dashboard to get started!
         };
 
         try {
-            const info = await getTransporter().sendMail(mailOptions);
+            const info = await sendEmail(mailOptions);
             console.log('[Email] Welcome email sent:', info.messageId);
             return { success: true, messageId: info.messageId };
         } catch (error) {
