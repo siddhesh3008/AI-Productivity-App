@@ -10,7 +10,7 @@
 [![OpenAI](https://img.shields.io/badge/OpenAI-GPT--3.5-412991?logo=openai&logoColor=white)](https://openai.com/)
 [![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.4-06B6D4?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 
-[Live Demo](#) · [Features](#-key-features) · [Tech Stack](#%EF%B8%8F-tech-stack) · [Getting Started](#-quick-start) · [API Docs](./API_DOCUMENTATION.md)
+[Live Demo](https://ai-productivity-app-ivory.vercel.app/) · [Features](#-key-features) · [Tech Stack](#%EF%B8%8F-tech-stack) · [Getting Started](#-quick-start) · [API Docs](./API_DOCUMENTATION.md)
 
 </div>
 
