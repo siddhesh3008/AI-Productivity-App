@@ -1,0 +1,26 @@
+{
+  "name": "ai-productivity-app",
+  "version": "1.0.0",
+  "description": "AI-Powered Productivity App with Smart Notes, Task Management, and AI Assistant",
+  "main": "index.js",
+  "scripts": {
+    "install:all": "npm install && cd frontend && npm install && cd ../backend && npm install",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "cd backend && npm run dev",
+    "client": "cd frontend && npm run dev",
+    "build": "cd frontend && npm run build",
+    "start": "cd backend && npm start"
+  },
+  "keywords": [
+    "productivity",
+    "ai",
+    "notes",
+    "tasks",
+    "openai"
+  ],
+  "author": "Siddhesh Haldankar",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
