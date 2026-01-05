@@ -1,44 +1,14 @@
 import nodemailer from 'nodemailer';
-import { Resend } from 'resend';
-
-// Resend client instance
-let resendClient = null;
 
 // Transporter instance (created lazily)
 let transporter = null;
-
-// Check if using Resend
-const isUsingResend = () => !!process.env.RESEND_API_KEY;
-
-// Get Resend client
-const getResendClient = () => {
-    if (!resendClient && process.env.RESEND_API_KEY) {
-        resendClient = new Resend(process.env.RESEND_API_KEY);
-        console.log('📧 Email service: Using Resend');
-    }
-    return resendClient;
-};
 
 // Create transporter - using environment variables
 const getTransporter = () => {
     // Return cached transporter if already created
     if (transporter) return transporter;
 
-    // For production, use SendGrid or similar
-    if (process.env.SENDGRID_API_KEY) {
-        transporter = nodemailer.createTransport({
-            host: 'smtp.sendgrid.net',
-            port: 587,
-            auth: {
-                user: 'apikey',
-                pass: process.env.SENDGRID_API_KEY,
-            },
-        });
-        console.log('📧 Email service: Using SendGrid');
-        return transporter;
-    }
-
-    // For development/testing - use Ethereal or Gmail
+    // For Gmail/SMTP
     if (process.env.SMTP_HOST) {
         transporter = nodemailer.createTransport({
             host: process.env.SMTP_HOST,
@@ -60,7 +30,6 @@ const getTransporter = () => {
             console.log('📧 Email would be sent:');
             console.log('To:', options.to);
             console.log('Subject:', options.subject);
-            // Never log the email body as it may contain reset links
             console.log('---');
             return { messageId: 'dev-mode-' + Date.now() };
         },
@@ -68,24 +37,9 @@ const getTransporter = () => {
     return transporter;
 };
 
-// Helper to send email via Resend or Nodemailer
+// Helper to send email
 const sendEmail = async (mailOptions) => {
-    if (isUsingResend()) {
-        const resend = getResendClient();
-        const result = await resend.emails.send({
-            from: mailOptions.from,
-            to: mailOptions.to,
-            subject: mailOptions.subject,
-            html: mailOptions.html,
-            text: mailOptions.text,
-        });
-        if (result.error) {
-            throw new Error(result.error.message);
-        }
-        return { messageId: result.data?.id || 'resend-' + Date.now() };
-    } else {
-        return await getTransporter().sendMail(mailOptions);
-    }
+    return await getTransporter().sendMail(mailOptions);
 };
 
 // Get the FROM address from environment or default
