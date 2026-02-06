@@ -180,17 +180,17 @@ Just type a command or ask me anything!`,
                 </p>
             </div>
 
-            {/* Quick Actions */}
-            <div className="flex flex-wrap gap-2 justify-center">
+            {/* Quick Actions - 2x2 grid on mobile, 4 cols on desktop */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 px-2">
                 {quickActions.map((action, i) => (
                     <button
                         key={i}
                         onClick={() => handleQuickAction(action)}
                         disabled={loading}
-                        className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded-full hover:border-primary-500 hover:text-primary-500 dark:hover:text-primary-400 transition-all text-sm disabled:opacity-50 shadow-sm"
+                        className="flex items-center justify-center gap-2 px-3 py-2.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:border-primary-500 hover:text-primary-500 dark:hover:text-primary-400 transition-all text-sm disabled:opacity-50 shadow-sm"
                     >
-                        <action.icon className="w-4 h-4" />
-                        {action.placeholder ? action.text.replace(' ', '...') : action.text}
+                        <action.icon className="w-4 h-4 flex-shrink-0" />
+                        <span className="truncate">{action.placeholder ? action.text.replace(' ', '...') : action.text}</span>
                     </button>
                 ))}
             </div>
