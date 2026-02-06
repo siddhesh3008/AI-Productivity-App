@@ -59,11 +59,11 @@ const Header = ({ onMenuClick }) => {
                             {/* Dropdown */}
                             <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                                 <div className="py-2">
-                                    <div className="px-4 py-2 border-b border-gray-100 dark:border-gray-700 md:hidden">
-                                        <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                                    <div className="px-4 py-2 border-b border-gray-100 dark:border-gray-700 md:hidden overflow-hidden">
+                                        <p className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">
                                             {user?.name}
                                         </p>
-                                        <p className="text-xs text-gray-500 dark:text-gray-400">
+                                        <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
                                             {user?.email}
                                         </p>
                                     </div>
