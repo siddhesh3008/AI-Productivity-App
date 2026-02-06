@@ -10,7 +10,9 @@ const Assistant = () => {
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState('');
     const [loading, setLoading] = useState(false);
+    const [isInitialLoad, setIsInitialLoad] = useState(true);
     const messagesEndRef = useRef(null);
+    const containerRef = useRef(null);
     const { fetchNotifications } = useNotifications();
 
     const presetQuestions = [
@@ -25,6 +27,11 @@ const Assistant = () => {
         { text: 'Show all my tasks', icon: ListTodo, placeholder: null },
         { text: 'Show all my notes', icon: FileText, placeholder: null },
     ];
+
+    // Scroll to top of page when component mounts
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
 
     useEffect(() => {
         // Welcome message
@@ -41,11 +48,16 @@ Just type a command or ask me anything!`,
                 timestamp: new Date(),
             },
         ]);
+        // Mark initial load as complete after welcome message
+        setIsInitialLoad(false);
     }, []);
 
     useEffect(() => {
-        scrollToBottom();
-    }, [messages]);
+        // Only scroll to bottom for new messages, not on initial load
+        if (!isInitialLoad && messages.length > 1) {
+            scrollToBottom();
+        }
+    }, [messages, isInitialLoad]);
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });

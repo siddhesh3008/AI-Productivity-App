@@ -100,12 +100,15 @@ export const AuthProvider = ({ children }) => {
 
         return new Promise((resolve, reject) => {
             // Use token client which returns access token directly
+            // This doesn't require redirect URIs for popup mode
             const client = window.google.accounts.oauth2.initTokenClient({
                 client_id: clientId,
                 scope: 'openid email profile',
+                ux_mode: 'popup',
                 callback: async (response) => {
                     if (response.error) {
-                        toast.error('Google sign-in was cancelled');
+                        console.error('Google OAuth error:', response.error);
+                        toast.error('Google sign-in was cancelled or failed');
                         reject(new Error(response.error));
                         return;
                     }
@@ -127,6 +130,11 @@ export const AuthProvider = ({ children }) => {
                         reject(error);
                     }
                 },
+                error_callback: (error) => {
+                    console.error('Google OAuth init error:', error);
+                    toast.error('Failed to initialize Google Sign-In. Please try again.');
+                    reject(new Error('OAuth initialization failed'));
+                }
             });
 
             client.requestAccessToken();
@@ -152,9 +160,11 @@ export const AuthProvider = ({ children }) => {
             const client = window.google.accounts.oauth2.initTokenClient({
                 client_id: clientId,
                 scope: 'openid email profile',
+                ux_mode: 'popup',
                 callback: async (response) => {
                     if (response.error) {
-                        toast.error('Google sign-in was cancelled');
+                        console.error('Google OAuth error:', response.error);
+                        toast.error('Google sign-in was cancelled or failed');
                         reject(new Error(response.error));
                         return;
                     }
@@ -176,6 +186,11 @@ export const AuthProvider = ({ children }) => {
                         reject(error);
                     }
                 },
+                error_callback: (error) => {
+                    console.error('Google OAuth init error:', error);
+                    toast.error('Failed to initialize Google Sign-In. Please try again.');
+                    reject(new Error('OAuth initialization failed'));
+                }
             });
 
             client.requestAccessToken();

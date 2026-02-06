@@ -305,10 +305,10 @@ const Dashboard = () => {
                 <div className="flex gap-2 sm:gap-3 flex-wrap">
                     <button
                         onClick={() => setShowCalendar(!showCalendar)}
-                        className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-lg hover:from-primary-600 hover:to-primary-700 transition-all shadow-md hover:shadow-lg"
+                        className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-lg hover:from-primary-600 hover:to-primary-700 transition-all shadow-md hover:shadow-lg text-sm sm:text-base"
                     >
-                        <Calendar className="w-5 h-5" />
-                        <span className="hidden sm:inline">Schedule</span>
+                        <Calendar className="w-4 h-4 sm:w-5 sm:h-5" />
+                        <span>Schedule</span>
                     </button>
                     <button
                         onClick={() => {
@@ -318,11 +318,11 @@ const Dashboard = () => {
                             setNewItemContent('');
                             setQuickAiMode(false);
                         }}
-                        className="flex items-center gap-2 px-3 py-2.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-all"
+                        className="flex items-center gap-1.5 sm:gap-2 px-3 py-2 sm:py-2.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-all text-sm sm:text-base"
                         title="New Note"
                     >
-                        <StickyNote className="w-5 h-5 text-purple-500" />
-                        <span className="hidden sm:inline">Note</span>
+                        <StickyNote className="w-4 h-4 sm:w-5 sm:h-5 text-purple-500" />
+                        <span>Create Note</span>
                     </button>
                     <button
                         onClick={() => {
@@ -332,11 +332,11 @@ const Dashboard = () => {
                             setNewItemContent('');
                             setQuickAiMode(false);
                         }}
-                        className="flex items-center gap-2 px-3 py-2.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-all"
+                        className="flex items-center gap-1.5 sm:gap-2 px-3 py-2 sm:py-2.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-all text-sm sm:text-base"
                         title="New Task"
                     >
-                        <ListTodo className="w-5 h-5 text-blue-500" />
-                        <span className="hidden sm:inline">Task</span>
+                        <ListTodo className="w-4 h-4 sm:w-5 sm:h-5 text-blue-500" />
+                        <span>Create Task</span>
                     </button>
                 </div>
             </div>
